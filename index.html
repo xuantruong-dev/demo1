@@ -2,12 +2,12 @@
 <html lang="vi" class="scroll-smooth">
   <head>
     <script>
-      /* Ensure window.fetch is writable and handle getter-only environments */
+      /* Ensure window.fetch is writable and handle getter-only environments for extensions */
       (function() {
         try {
-          var currentFetch = window.fetch ? window.fetch.bind(window) : null;
-          var storedFetch = currentFetch;
-          var desc = {
+          var originalFetch = typeof window !== 'undefined' ? window.fetch : null;
+          var storedFetch = originalFetch ? originalFetch.bind(window) : null;
+          var descriptor = {
             configurable: true,
             enumerable: true,
             get: function() {
@@ -17,27 +17,33 @@
               storedFetch = fn;
             }
           };
+
           try {
-            Object.defineProperty(window, 'fetch', desc);
+            Object.defineProperty(window, 'fetch', descriptor);
           } catch (_) {}
+
           if (typeof Window !== 'undefined' && Window.prototype) {
             try {
-              Object.defineProperty(Window.prototype, 'fetch', desc);
+              Object.defineProperty(Window.prototype, 'fetch', descriptor);
             } catch (_) {}
           }
+
           if (typeof globalThis !== 'undefined' && globalThis !== window) {
             try {
-              Object.defineProperty(globalThis, 'fetch', desc);
+              Object.defineProperty(globalThis, 'fetch', descriptor);
             } catch (_) {}
           }
-        } catch (e) {}
+        } catch (_) {}
 
+        // Intercept and swallow any rogue extension errors relating to 'fetch' or 'getter'
         window.addEventListener('error', function(event) {
-          if (event && event.message && event.message.indexOf('fetch') !== -1 && event.message.indexOf('getter') !== -1) {
-            event.preventDefault();
+          if (event && event.message && (event.message.indexOf('fetch') !== -1 || event.message.indexOf('getter') !== -1)) {
+            if (event.stopImmediatePropagation) event.stopImmediatePropagation();
+            if (event.stopPropagation) event.stopPropagation();
+            if (event.preventDefault) event.preventDefault();
             return true;
           }
-        });
+        }, true);
       })();
     </script>
     <meta charset="UTF-8" />
@@ -48,13 +54,44 @@
     <meta property="og:description" content="Phiên bản số hóa bổ trợ Báo cáo kiến tập tại Detrang Farm: Nông nghiệp × Giáo dục × Trải nghiệm | Khoa Kinh tế Chính trị – UEB – VNU" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Trailing slash redirect guard for GitHub Pages subfolder hosting -->
+    <script>
+      (function() {
+        var path = window.location.pathname;
+        if (path && !path.endsWith('/') && !path.split('/').pop().includes('.')) {
+          window.location.replace(path + '/' + window.location.search + window.location.hash);
+        }
+      })();
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   </head>
   <body class="bg-[#FBFBF7] text-[#1E221E] antialiased selection:bg-[#164E37]/15 selection:text-[#164E37]">
-    <div id="root"></div>
+    <!-- Root Container with Fallback Preloader (Replaced automatically when React mounts) -->
+    <div id="root">
+      <div id="app-preloader" style="min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #FBFBF7; font-family: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif; padding: 24px; text-align: center;">
+        <div style="width: 48px; height: 48px; border: 4px solid #D6D3C7; border-top-color: #164E37; border-radius: 50%; animation: spin 0.9s linear infinite;"></div>
+        <h2 style="margin-top: 20px; font-size: 17px; font-weight: 700; color: #164E37; letter-spacing: 0.01em;">DETRANG FARM FIELD STUDY 2026</h2>
+        <p style="margin-top: 6px; font-size: 13px; color: #666052;">Đang tải dữ liệu số hóa và thư viện hình ảnh thực địa...</p>
+        <div id="slow-loading-hint" style="display: none; margin-top: 16px; padding: 10px 16px; border-radius: 8px; background: #FFF4E5; border: 1px solid #FFD8A8; font-size: 12px; color: #8A4B08; max-width: 420px;">
+          Nếu trang không tải sau 5 giây, vui lòng kiểm tra kết nối mạng hoặc thử tải lại trang bằng cách bấm F5.
+        </div>
+      </div>
+      <style>
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+      </style>
+      <script>
+        setTimeout(function() {
+          var hint = document.getElementById('slow-loading-hint');
+          if (hint) hint.style.display = 'block';
+        }, 4000);
+      </script>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

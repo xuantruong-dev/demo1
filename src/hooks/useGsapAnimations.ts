@@ -13,7 +13,6 @@ if (typeof window !== 'undefined') {
 
 export const useGsapAnimations = () => {
   useEffect(() => {
-    // Only run animations if user doesn't prefer reduced motion
     try {
       const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia
         ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -21,7 +20,7 @@ export const useGsapAnimations = () => {
       if (prefersReducedMotion) return;
 
       const ctx = gsap.context(() => {
-        // 1. Hero Entrance Timeline (Only on the hero header elements)
+        // 1. Hero Entrance Timeline
         const heroTl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
         heroTl
@@ -72,7 +71,7 @@ export const useGsapAnimations = () => {
         sectionHeaders.forEach((header) => {
           gsap.fromTo(
             header,
-            { y: 20, opacity: 0 },
+            { y: 16, opacity: 0.2 },
             {
               y: 0,
               opacity: 1,
@@ -87,7 +86,7 @@ export const useGsapAnimations = () => {
           );
         });
 
-        // 3. Animate Feature & KPI Cards with gentle stagger
+        // 3. Animate Feature & KPI Cards with gentle stagger (starting with visible 0.3 opacity so never blank)
         const cardGrids = document.querySelectorAll('.grid');
         cardGrids.forEach((grid) => {
           if (grid.closest('#modal-root') || grid.closest('header') || grid.closest('nav')) return;
@@ -96,7 +95,7 @@ export const useGsapAnimations = () => {
           if (cards.length > 1 && cards.length <= 12) {
             gsap.fromTo(
               cards,
-              { y: 18, opacity: 0 },
+              { y: 14, opacity: 0.3 },
               {
                 y: 0,
                 opacity: 1,
@@ -112,6 +111,11 @@ export const useGsapAnimations = () => {
             );
           }
         });
+
+        // Refresh triggers once all DOM & images settle
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 500);
       });
 
       return () => {
