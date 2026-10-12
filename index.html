@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="vi" class="scroll-smooth">
+  <head>
+    <script>
+      /* Ensure window.fetch is writable and handle getter-only environments */
+      (function() {
+        try {
+          var currentFetch = window.fetch ? window.fetch.bind(window) : null;
+          var storedFetch = currentFetch;
+          var desc = {
+            configurable: true,
+            enumerable: true,
+            get: function() {
+              return storedFetch;
+            },
+            set: function(fn) {
+              storedFetch = fn;
+            }
+          };
+          try {
+            Object.defineProperty(window, 'fetch', desc);
+          } catch (_) {}
+          if (typeof Window !== 'undefined' && Window.prototype) {
+            try {
+              Object.defineProperty(Window.prototype, 'fetch', desc);
+            } catch (_) {}
+          }
+          if (typeof globalThis !== 'undefined' && globalThis !== window) {
+            try {
+              Object.defineProperty(globalThis, 'fetch', desc);
+            } catch (_) {}
+          }
+        } catch (e) {}
+
+        window.addEventListener('error', function(event) {
+          if (event && event.message && event.message.indexOf('fetch') !== -1 && event.message.indexOf('getter') !== -1) {
+            event.preventDefault();
+            return true;
+          }
+        });
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DETRANG FARM FIELD STUDY 2026 — Digital Companion</title>
+    <meta name="description" content="Phiên bản số hóa bổ trợ Báo cáo kiến tập tại Detrang Farm: Nông nghiệp × Giáo dục × Trải nghiệm | Khoa Kinh tế Chính trị – UEB – VNU" />
+    <meta property="og:title" content="DETRANG FARM FIELD STUDY 2026 — Digital Companion" />
+    <meta property="og:description" content="Phiên bản số hóa bổ trợ Báo cáo kiến tập tại Detrang Farm: Nông nghiệp × Giáo dục × Trải nghiệm | Khoa Kinh tế Chính trị – UEB – VNU" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-[#FBFBF7] text-[#1E221E] antialiased selection:bg-[#164E37]/15 selection:text-[#164E37]">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

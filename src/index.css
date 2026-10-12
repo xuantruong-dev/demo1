@@ -1,0 +1,188 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Lora", Georgia, serif;
+  --font-sans: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-jakarta: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-forest: #164E37;
+  --color-forest-dark: #0F3827;
+  --color-forest-light: #22674B;
+  --color-earth: #784A29;
+  --color-earth-dark: #58331A;
+  --color-canvas: #FBFBF7;
+  --color-canvas-alt: #F4F3EC;
+  --color-ink: #161A16;
+}
+
+:root {
+  --base-font-size: 16.5px;
+  --base-line-height: 1.72;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #FBFBF7;
+  color: #1A1F1A;
+  font-size: var(--base-font-size);
+  line-height: var(--base-line-height);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ========================================================
+   VIETNAMESE TYPOGRAPHY LEGIBILITY RULES
+   1. Never use negative letter-spacing on Vietnamese diacritics
+   2. Ensure comfortable leading (line-height) to prevent accent collision
+   3. Maintain crisp contrast with background
+   ======================================================== */
+
+/* Editorial Headings (Be Vietnam Pro by default for highest Vietnamese legibility) */
+.font-editorial {
+  font-family: var(--font-sans);
+  letter-spacing: 0 !important;
+  text-rendering: optimizeLegibility;
+}
+
+/* Clean Body Text */
+.font-body {
+  font-family: var(--font-sans);
+  letter-spacing: 0.003em;
+  line-height: var(--base-line-height);
+}
+
+.font-code {
+  font-family: "JetBrains Mono", monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Neutralize harsh negative tracking across headings so Vietnamese accents stay legible */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: 0 !important;
+  line-height: 1.28 !important;
+}
+
+/* --------------------------------------------------------
+   FONT FAMILY MODES
+   -------------------------------------------------------- */
+
+/* Mode 1: Be Vietnam Pro (Default & Most Legible for Vietnamese) */
+.font-mode-vietnam .font-editorial,
+.font-mode-sans .font-editorial {
+  font-family: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, sans-serif !important;
+  letter-spacing: 0 !important;
+}
+.font-mode-vietnam .font-body,
+.font-mode-sans .font-body {
+  font-family: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Mode 2: Plus Jakarta Sans (Modern Geometric Sans) */
+.font-mode-jakarta .font-editorial {
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
+  letter-spacing: -0.005em !important;
+}
+.font-mode-jakarta .font-body {
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Mode 3: Academic Lora Serif (Refined Academic Thesis) */
+.font-mode-serif .font-editorial,
+.font-mode-academic .font-editorial {
+  font-family: "Lora", Georgia, serif !important;
+  letter-spacing: 0.005em !important;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+.font-mode-serif .font-body,
+.font-mode-academic .font-body {
+  font-family: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* --------------------------------------------------------
+   FONT SIZES (Accessible Reading Scale)
+   -------------------------------------------------------- */
+.font-size-sm {
+  --base-font-size: 15px;
+}
+
+.font-size-md {
+  --base-font-size: 16.5px;
+}
+
+.font-size-lg {
+  --base-font-size: 18px;
+}
+
+.font-size-xl {
+  --base-font-size: 19.5px;
+}
+
+/* --------------------------------------------------------
+   LINE HEIGHT / GIÃN DÒNG
+   -------------------------------------------------------- */
+.leading-standard {
+  --base-line-height: 1.68;
+}
+
+.leading-relaxed {
+  --base-line-height: 1.88;
+}
+
+/* --------------------------------------------------------
+   HIGH CONTRAST / TƯƠNG PHẢN CAO
+   -------------------------------------------------------- */
+.contrast-high {
+  background-color: #FFFFFF !important;
+  color: #0A0D0A !important;
+}
+.contrast-high section {
+  background-color: #FFFFFF !important;
+}
+.contrast-high .bg-\[\#FAF9F5\],
+.contrast-high .bg-\[\#FBFBF7\],
+.contrast-high .bg-\[\#F4F3EC\] {
+  background-color: #F8F9F8 !important;
+}
+.contrast-high .text-stone-600,
+.contrast-high .text-stone-500 {
+  color: #2E332E !important;
+}
+.contrast-high .text-stone-700 {
+  color: #171A17 !important;
+}
+
+/* Custom scrollbar for academic feel */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #F4F3EC;
+}
+::-webkit-scrollbar-thumb {
+  background: #B6B2A5;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #847F72;
+}
+
+/* Cinematic subtle zoom for Hero background */
+@keyframes hero-zoom {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-hero-zoom {
+  animation: hero-zoom 24s ease-in-out infinite alternate;
+  will-change: transform;
+}

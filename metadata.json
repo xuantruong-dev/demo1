@@ -1,0 +1,8 @@
+{
+  "name": "Remix Remix DETRANG FARM FIELD STUDY 2026 - Digital Companion",
+  "description": "Phiên bản số hóa bổ trợ Báo cáo kiến tập tại Detrang Farm: Nông nghiệp × Giáo dục × Trải nghiệm | Khoa Kinh tế Chính trị – UEB – VNU",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
