@@ -24,10 +24,12 @@ function githubPagesSpaPlugin() {
   };
 }
 
+// Automatically detect GitHub repo name (e.g. /demo1/) or fallback to relative base './'
+const base = process.env.BASE_PATH || (process.env.GITHUB_REPOSITORY ? `/${process.env.GITHUB_REPOSITORY.split('/')[1]}/` : './');
+
 // https://vite.dev/config/
 export default defineConfig({
-  // Use relative base path './' so assets load seamlessly on github.io/<repo-name>/, custom domains, or local dist
-  base: './',
+  base,
   plugins: [
     react(),
     tailwindcss(),
