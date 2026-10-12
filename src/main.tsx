@@ -21,16 +21,16 @@ try {
   // ignore
 }
 
-import {StrictMode} from 'react';
-import {createRoot} from 'react-dom/client';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
-import { EvidenceLightboxProvider } from './context/EvidenceLightboxContext';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <EvidenceLightboxProvider>
+    <ErrorBoundary>
       <App />
-    </EvidenceLightboxProvider>
+    </ErrorBoundary>
   </StrictMode>,
 );

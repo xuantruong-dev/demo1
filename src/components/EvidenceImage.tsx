@@ -53,7 +53,7 @@ export const EvidenceImage: React.FC<EvidenceImageProps> = ({
   const effectiveCaption = caption || item.caption;
   const effectiveAlt = alt || effectiveCaption;
   const primaryUrl = getEvidenceUrl(item.code) || getEvidenceUrl(item.filename);
-  const fallbackUrl = `/images/${item.filename}`;
+  const fallbackUrl = `${import.meta.env.BASE_URL}images/${item.filename}`;
   const currentSrc = useFallback ? fallbackUrl : primaryUrl;
 
   const getBadgeStyle = (type: string) => {

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { FileText, ArrowDown, Sparkles, Maximize2, ShieldCheck } from 'lucide-react';
 import { useEvidenceLightbox } from '../context/EvidenceLightboxContext';
+import heroBgImage from '../assets/images/nha_detrang_farm_1790333789839.jpg';
+import tt10Image from '../assets/images/TT10_nha-detrang-farm.jpg';
 
 interface HeroSectionProps {
   onOpenReportModal: () => void;
@@ -8,7 +10,7 @@ interface HeroSectionProps {
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenReportModal }) => {
   const { openEvidence } = useEvidenceLightbox();
-  const [bgImage, setBgImage] = useState<string>('/images/nha_detrang_farm_1790333789839.jpg');
+  const [bgImage, setBgImage] = useState<string>(heroBgImage);
 
   return (
     <section className="relative w-full min-h-[92vh] lg:min-h-screen flex flex-col justify-between overflow-hidden bg-[#04140C] text-white">
@@ -21,8 +23,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenReportModal }) =
           className="w-full h-full object-cover object-[center_35%] lg:object-[68%_center] filter brightness-[0.92] contrast-[1.05]"
           onError={(e) => {
             const target = e.currentTarget;
-            if (!target.src.includes('TT10')) {
-              target.src = '/images/TT10_nha-detrang-farm.jpg';
+            if (target.src !== tt10Image) {
+              target.src = tt10Image;
             }
           }}
         />

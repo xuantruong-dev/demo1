@@ -26,7 +26,7 @@ export const EvidenceLightboxModal: React.FC = () => {
   if (!isOpen || !activeEvidence) return null;
 
   const currentSrc = useFallback
-    ? `/images/${activeEvidence.filename}`
+    ? `${import.meta.env.BASE_URL}images/${activeEvidence.filename}`
     : getEvidenceUrl(activeEvidence.code) || getEvidenceUrl(activeEvidence.filename);
 
   const handleImageError = () => {
